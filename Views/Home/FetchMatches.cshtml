@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Fetch Matches";
+}
+
+<h2>Fetch Matches</h2>
+
+<form id="fetchMatchesForm" method="post">
+    <button type="submit">Fetch Matches</button>
+</form>
+
+<div id="matchesContainer">
+    <pre id="matches"></pre>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#fetchMatchesForm').on('submit', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("FetchMatchesAsync", "Home")',
+                    type: 'POST',
+                    success: function (data) {
+                        $('#matches').text(data);
+                    },
+                    error: function (xhr, status, error) {
+                        $('#matches').text('Error fetching matches: ' + xhr.responseText);
+                        console.log('Error: ' + error);
+                        console.log('Status: ' + status);
+                        console.dir(xhr);
+                    }
+                });
+            });
+        });
+    </script>
+}

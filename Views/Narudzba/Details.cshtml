@@ -1,0 +1,42 @@
+﻿@model PremierPro.Models.Narudzba
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Narudzba</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UkupnoZaPlatiti)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UkupnoZaPlatiti)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NarudzbaKupacID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NarudzbaKupacID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DaLiJePoslano)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DaLiJePoslano)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DatumSlanja)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DatumSlanja)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.NarudzbaID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

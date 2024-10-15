@@ -1,0 +1,151 @@
+﻿@model PremierPro.Models.Proizvod
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="product-details">
+    <div class="product-image">
+        <img src="@Model.SlikaUrl" alt="Product Image" style="width:300px;height:300px;" />
+    </div>
+    <div class="product-info">
+        <h2>@Model.Ime</h2>
+        <p>@Model.Opis</p>
+
+        <div class="product-sizes">
+            <h4>Title</h4>
+            <div class="sizes"> 
+                @foreach (Velicina size in Enum.GetValues(typeof(Velicina)))
+                {
+                    <span class="size-box @(size == Model.Velicine ? "active-size" : "")" data-size="@size">@size</span>
+                }
+            </div>
+        </div>
+        @if (User.IsInRole("Employee") || User.IsInRole("Customer"))
+            {
+        <div class="product-buttons">
+            <button class="btn-buy" onclick="redirectToNarudzbaCreate()">Buy Now</button>
+            <button class="btn-add-to-cart">Add to Cart</button>
+        </div>
+        }
+        <div class="navigation-buttons">
+            @if (User.IsInRole("Employee"))
+            {
+                <a class="btn btn-edit" asp-action="Edit" asp-route-id="@Model?.ProizvodID">Edit</a>
+            }
+            <a class="btn btn-back" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product-details {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .product-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .product-info {
+        margin-left: 20px;
+    }
+
+        .product-info h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+    .product-sizes h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .sizes span {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+    }
+
+    .sizes .active-size {
+        background-color: purple;
+        color: white;
+    }
+
+    .product-buttons {
+        margin-top: 20px;
+    }
+
+    .btn-buy, .btn-add-to-cart {
+        padding: 10px 20px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-buy {
+        background-color: purple;
+        color: white;
+    }
+
+    .btn-add-to-cart {
+        background-color: white;
+        color: purple;
+        border: 1px solid purple;
+    }
+
+    .navigation-buttons {
+        margin-top: 20px;
+    }
+
+        .navigation-buttons .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+    .btn-edit {
+        background-color: purple;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .btn-back {
+        background-color: #f0f0f0;
+        color: black;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<script>
+    function redirectToNarudzbaCreate() {
+        window.location.href = '@Url.Action("Create", "Narudzba")';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sizeBoxes = document.querySelectorAll('.size-box');
+
+        sizeBoxes.forEach(box => {
+            box.addEventListener('click', function () {
+                sizeBoxes.forEach(b => b.classList.remove('active-size'));
+                this.classList.toggle('active-size');
+            });
+        });
+    });
+</script>
